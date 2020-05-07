@@ -1,0 +1,19 @@
+{
+    "name": "lexuss1979/validol",
+    "description": "simple php validator",
+    "authors": [
+        {
+            "name": "Alexey Afanasyev",
+            "email": "afanasyev.a.a@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+                "Lexuss1979\\Validol\\" : "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    }
+}
