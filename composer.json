@@ -1,6 +1,7 @@
 {
     "name": "lexuss1979/validol",
     "description": "simple php validator",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "Alexey Afanasyev",
