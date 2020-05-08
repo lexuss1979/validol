@@ -53,18 +53,4 @@ class Validator
     public function validated(){
         return $this->validated;
     }
-
-    protected function isIntValue($value){
-        if(is_bool($value)) return false;
-        return  is_int($value) || preg_match('/^\d+$/',$value);
-    }
-
-    protected function isBool($value){
-        return is_bool($value) ||in_array($value,[0,1], true);
-    }
-
-    protected function isEmail($value)
-    {
-        return filter_var($value, FILTER_VALIDATE_EMAIL);
-    }
 }
