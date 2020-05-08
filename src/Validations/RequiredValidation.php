@@ -4,10 +4,8 @@
 namespace Lexuss1979\Validol\Validations;
 
 
-class RequiredValidation implements ValidationInterface
+class RequiredValidation extends AbstractValidation implements ValidationInterface
 {
-    protected $error;
-
     public function validate($data, $key)
     {
         $testedValue = $data[$key] ?? null;
@@ -18,8 +16,4 @@ class RequiredValidation implements ValidationInterface
         return true;
     }
 
-    public function error()
-    {
-        return $this->error;
-    }
 }

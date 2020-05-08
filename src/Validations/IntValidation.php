@@ -4,9 +4,8 @@
 namespace Lexuss1979\Validol\Validations;
 
 
-class IntValidation implements ValidationInterface
+class IntValidation extends AbstractValidation implements ValidationInterface
 {
-    protected $error;
     public function validate($data, $key)
     {
         $testedValue = $data[$key] ?? null;
@@ -15,11 +14,6 @@ class IntValidation implements ValidationInterface
             return false;
         }
         return true;
-    }
-
-    public function error()
-    {
-        return $this->error;
     }
 
     protected function isIntValue($value){

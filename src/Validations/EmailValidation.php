@@ -4,9 +4,8 @@
 namespace Lexuss1979\Validol\Validations;
 
 
-class EmailValidation implements ValidationInterface
+class EmailValidation extends AbstractValidation implements ValidationInterface
 {
-    protected $error;
     public function validate($data, $key)
     {
         $testedValue = $data[$key] ?? null;
@@ -21,10 +20,6 @@ class EmailValidation implements ValidationInterface
     {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
-
-    public function error()
-    {
-        return $this->error;
-    }
+    
 }
 

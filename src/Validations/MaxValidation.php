@@ -4,15 +4,8 @@
 namespace Lexuss1979\Validol\Validations;
 
 
-class MaxValidation implements ValidationInterface
+class MaxValidation extends AbstractValidation implements ValidationInterface
 {
-    protected $error;
-    protected $options;
-    public function __construct($options = null)
-    {
-        $this->options = $options;
-    }
-
     public function validate($data, $key)
     {
         $testedValue = $data[$key] ?? null;
@@ -23,8 +16,4 @@ class MaxValidation implements ValidationInterface
         return true;
     }
 
-    public function error()
-    {
-        return $this->error;
-    }
 }

@@ -4,16 +4,8 @@
 namespace Lexuss1979\Validol\Validations;
 
 
-class MinValidation
+class MinValidation extends AbstractValidation implements ValidationInterface
 {
-    protected $error;
-    protected $options;
-
-    public function __construct($options = null)
-    {
-        $this->options = $options;
-    }
-
     public function validate($data, $key)
     {
         $testedValue = $data[$key] ?? null;
@@ -24,9 +16,5 @@ class MinValidation
         return true;
     }
 
-    public function error()
-    {
-        return $this->error;
-    }
 }
 
