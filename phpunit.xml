@@ -2,6 +2,10 @@
         bootstrap="./vendor/autoload.php"
         backupGlobals="false"
         colors="true">
+
+    <whitelist>
+        <directory>src</directory>
+    </whitelist>
     <testsuites>
         <testsuite name="Unit">
             <directory>./tests/</directory>
