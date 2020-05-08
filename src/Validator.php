@@ -4,10 +4,18 @@
 namespace Lexuss1979\Validol;
 
 
+use Lexuss1979\Validol\Validations\ValidationFactory;
+
 class Validator
 {
     private $validated;
     private $errors;
+    private $validationFactory;
+
+    public function __construct()
+    {
+        $this->validationFactory = new ValidationFactory();
+    }
 
     public function validate($data, $rules)
     {
@@ -21,27 +29,10 @@ class Validator
 
             $valueIsValid = true;
             foreach ($validations as $validation){
-                switch ($validation){
-                    case "required":
-                        if(! isset($testedValue)) {
-                            $valueIsValid = false;
-                            $this->errors[$dataKey][] = "$dataKey must be specified";
-                        }
-                        break;
-
-                    case "int":
-                        if(! $this->isIntValue($testedValue)) {
-                            $valueIsValid = false;
-                            $this->errors[$dataKey][] = "$dataKey must be integer";
-                        }
-                        break;
-
-                    case "bool":
-                        if(! $this->isBool($testedValue) ) {
-                            $valueIsValid = false;
-                            $this->errors[$dataKey][] = "$dataKey must be bool";
-                        }
-                        break;
+                $validation = $this->validationFactory->get($validation);
+                if(!$validation->validate($data, $dataKey)){
+                    $this->errors[$dataKey][] = $validation->error();
+                    $valueIsValid = false;
                 }
             }
 
@@ -70,5 +61,10 @@ class Validator
 
     protected function isBool($value){
         return is_bool($value) ||in_array($value,[0,1], true);
+    }
+
+    protected function isEmail($value)
+    {
+        return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 }

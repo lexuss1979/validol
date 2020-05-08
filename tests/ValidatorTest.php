@@ -105,7 +105,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         $validData = ['age' => '55'];
         $invalidData1 = ['name' => 'Alex'];
         $invalidData2 = ['name' => 'Alex', 'age' => 'fifty five'];
-        $rules = [ "age" => 'require int'];
+        $rules = [ "age" => 'required int'];
         $this->assertTrue( $this->validator->validate($validData, $rules) );
         $this->assertFalse( $this->validator->validate($invalidData1, $rules) );
         $this->assertFalse( $this->validator->validate($invalidData2, $rules) );
@@ -156,5 +156,71 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
     {
         $this->validator->validate(['name'=>'Alex'], ['age' => 'required']);
         $this->assertCount(1, $this->validator->errors());
+    }
+
+    /** @test */
+    public function it_return_correct_validation_messages()
+    {
+        $this->validator->validate(['name'=>'Alex'], ['first_name' => 'required']);
+        $expectedErrors = [
+            'first_name' => ['first_name must be specified']
+        ];
+        $this->assertEquals($expectedErrors, $this->validator->errors());
+    }
+
+    /** @test
+     * @dataProvider emailProvider
+     */
+    public function it_validate_email($val, $result)
+    {
+        $rules = [ "email" => 'email'];
+        $this->assertSame($result,
+            $this->validator->validate(['email' => $val], $rules)
+        );
+    }
+
+    public function emailProvider()
+    {
+        return [
+            ["string", false],
+            ["maymail.ru", false],
+            ["alex@gmail", false],
+            ["alex.gmail.com", false],
+            ["alex@gmail.com", true],
+            ["alex_a@gmail.com", true],
+            ["alex.a.a@gmail.com", true],
+            [true, false],
+            [false, false],
+            [1, false],
+            [0, false],
+        ];
+    }
+
+    /** @test */
+    public function it_can_validate_max_for_string()
+    {
+        $this->assertFalse($this->validator->validate(
+            ['first_name'=>'Alex'],
+            ['first_name' => 'max:3'])
+        );
+
+        $this->assertTrue($this->validator->validate(
+            ['first_name'=>'Alex'],
+            ['first_name' => 'max:4'])
+        );
+    }
+
+    /** @test */
+    public function it_can_validate_min_for_string()
+    {
+        $this->assertFalse($this->validator->validate(
+            ['first_name'=>'Al'],
+            ['first_name' => 'min:3'])
+        );
+
+        $this->assertTrue($this->validator->validate(
+            ['first_name'=>'Alex'],
+            ['first_name' => 'min:4'])
+        );
     }
 }

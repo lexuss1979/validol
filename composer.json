@@ -7,7 +7,9 @@
             "email": "afanasyev.a.a@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+      "ext-mbstring": "*"
+    },
     "autoload": {
         "psr-4": {
                 "Lexuss1979\\Validol\\" : "src/"
