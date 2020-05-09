@@ -19,21 +19,43 @@ class ValueObject
      */
     private $type;
     private $name;
+    private $alias;
 
     public function __construct($name, $value, $type = null)
     {
         $this->name = $name;
+        $this->alias = $name;
         $this->value = $value;
         if(!in_array($type, $this->types())) throw new ValueObjectInvalidTypeException('Wrong type: '. $type);
         $this->type = $type;
     }
 
+    public function setAlias($alias){
+        $this->alias = $alias;
+    }
+
+    protected function setName($name){
+        if(preg_match("/^(\S*)\s*as\s*(\S*)$/",$name, $matches)){
+            $this->name = $matches[1];
+            $this->alias = $matches[2];
+        } else {
+            $this->name = $name;
+            $this->alias = $name;
+        }
+
+    }
+
+
     public function __invoke(){
         return $this->value;
     }
-    
+
     public function name(){
         return $this->name;
+    }
+
+    public function alias(){
+        return $this->alias;
     }
 
     public function value(){
@@ -71,6 +93,14 @@ class ValueObject
 
     public static function get($value, $type = null){
         return new static($value, $type);
+    }
+
+    /**
+     * @param Rule $rule
+     * @return bool
+     */
+    public function satisfy(Rule $rule) {
+        return $rule->process($this);
     }
 
 

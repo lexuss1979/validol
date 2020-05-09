@@ -35,4 +35,5 @@ class ValidationFactory
         }
         return new $this->map[$validationName]($options);
     }
+
 }

@@ -15,9 +15,18 @@ class DataProvider
     }
 
     public function get($key){
-        if(!isset($this->data[$key])) return new NullValueObject($key, null);
+        if(preg_match("/^(\S*)\s*as\s*(\S*)$/",$key, $matches)){
+            $name = $matches[1];
+            $alias = $matches[2];
+        } else {
+            $name = $key;
+            $alias = $key;
+        }
+        if(!isset($this->data[$name])) return new NullValueObject($name, null);
 
-        return new ValueObject($key, $this->data[$key]);
+        $value = new ValueObject($name, $this->data[$name]);
+        $value->setAlias($alias);
+        return  $value;
     }
 
 
