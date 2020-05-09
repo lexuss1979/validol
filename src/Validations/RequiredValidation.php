@@ -4,13 +4,15 @@
 namespace Lexuss1979\Validol\Validations;
 
 
+use Lexuss1979\Validol\NullValueObject;
+use Lexuss1979\Validol\ValueObject;
+
 class RequiredValidation extends AbstractValidation implements ValidationInterface
 {
-    public function validate($data, $key)
+    public function validate(ValueObject $data)
     {
-        $testedValue = $data[$key] ?? null;
-        if(! isset($testedValue)) {
-            $this->error = "$key must be specified";
+        if($data instanceof NullValueObject) {
+            $this->error = "{$data->name()} must be specified";
             return false;
         }
         return true;

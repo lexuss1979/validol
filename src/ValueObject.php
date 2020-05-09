@@ -18,9 +18,11 @@ class ValueObject
      * @var null
      */
     private $type;
+    private $name;
 
-    public function __construct($value, $type = null)
+    public function __construct($name, $value, $type = null)
     {
+        $this->name = $name;
         $this->value = $value;
         if(!in_array($type, $this->types())) throw new ValueObjectInvalidTypeException('Wrong type: '. $type);
         $this->type = $type;
@@ -28,6 +30,10 @@ class ValueObject
 
     public function __invoke(){
         return $this->value;
+    }
+    
+    public function name(){
+        return $this->name;
     }
 
     public function value(){

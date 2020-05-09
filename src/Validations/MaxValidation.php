@@ -4,13 +4,14 @@
 namespace Lexuss1979\Validol\Validations;
 
 
+use Lexuss1979\Validol\ValueObject;
+
 class MaxValidation extends AbstractValidation implements ValidationInterface
 {
-    public function validate($data, $key)
+    public function validate(ValueObject $data)
     {
-        $testedValue = $data[$key] ?? null;
-        if(mb_strlen($testedValue) > $this->options[0]) {
-            $this->error = "is too long (maximum {$this->options[0]} characters";
+        if(mb_strlen($data->value()) > $this->options[0]) {
+            $this->error = "{$data->name()} is too long (maximum {$this->options[0]} characters";
             return false;
         }
         return true;

@@ -4,13 +4,14 @@
 namespace Lexuss1979\Validol\Validations;
 
 
+use Lexuss1979\Validol\ValueObject;
+
 class IntValidation extends AbstractValidation implements ValidationInterface
 {
-    public function validate($data, $key)
+    public function validate(ValueObject $data)
     {
-        $testedValue = $data[$key] ?? null;
-        if(! $this->isIntValue($testedValue)) {
-            $this->error = "$key must be integer";
+        if(! $this->isIntValue($data->value())) {
+            $this->error = "{$data->name()} must be integer";
             return false;
         }
         return true;

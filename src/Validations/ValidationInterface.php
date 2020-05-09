@@ -4,14 +4,15 @@
 namespace Lexuss1979\Validol\Validations;
 
 
+use Lexuss1979\Validol\ValueObject;
+
 interface ValidationInterface
 {
     /**
-     * @param $data
-     * @param $key
+     * @param ValueObject $data
      * @return bool
      */
-    public function validate($data, $key);
+    public function validate(ValueObject $data);
 
     /**
      * @return string

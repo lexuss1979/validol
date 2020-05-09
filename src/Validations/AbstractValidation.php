@@ -4,6 +4,8 @@
 namespace Lexuss1979\Validol\Validations;
 
 
+use Lexuss1979\Validol\ValueObject;
+
 abstract class AbstractValidation
 {
     protected $error;
@@ -17,5 +19,5 @@ abstract class AbstractValidation
         return $this->error;
     }
 
-    abstract public function validate($data, $key);
+    abstract public function validate(ValueObject $data);
 }

@@ -4,13 +4,15 @@
 namespace Lexuss1979\Validol\Validations;
 
 
+use Lexuss1979\Validol\ValueObject;
+
 class EmailValidation extends AbstractValidation implements ValidationInterface
 {
-    public function validate($data, $key)
+    public function validate(ValueObject $data)
     {
-        $testedValue = $data[$key] ?? null;
-        if(! $this->isEmail($testedValue)) {
-            $this->error = "incorrect email address in $key";
+
+        if(! $this->isEmail($data->value())) {
+            $this->error = "incorrect email address in {$data->name()}";
             return false;
         }
         return true;

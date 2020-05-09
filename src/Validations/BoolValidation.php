@@ -4,14 +4,15 @@
 namespace Lexuss1979\Validol\Validations;
 
 
+use Lexuss1979\Validol\ValueObject;
+
 class BoolValidation extends AbstractValidation implements ValidationInterface
 {
 
-    public function validate($data, $key)
+    public function validate(ValueObject $data)
     {
-        $testedValue = $data[$key] ?? null;
-        if (!$this->isBool($testedValue)) {
-            $this->error = "$key must be bool";
+        if (!$this->isBool($data->value())) {
+            $this->error = "{$data->name()} must be bool";
             return false;
         }
         return true;
