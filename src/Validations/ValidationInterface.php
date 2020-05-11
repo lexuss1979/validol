@@ -18,4 +18,6 @@ interface ValidationInterface
      * @return string
      */
     public function error();
+
+    public function group();
 }

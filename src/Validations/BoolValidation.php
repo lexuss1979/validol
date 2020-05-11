@@ -8,6 +8,7 @@ use Lexuss1979\Validol\ValueObject;
 
 class BoolValidation extends AbstractValidation implements ValidationInterface
 {
+    protected $group = self::TYPE_GROUP;
 
     public function validate(ValueObject $data)
     {

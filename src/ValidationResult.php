@@ -17,19 +17,23 @@ class ValidationResult
         $this->errors = $errors;
     }
 
-    public function success(){
+    public function fails()
+    {
+        return !$this->success();
+    }
+
+    public function success()
+    {
         return $this->result;
     }
 
-    public function fails(){
-        return ! $this->success();
-    }
-
-    public function data(){
+    public function data()
+    {
         return $this->validated;
     }
 
-    public function errors(){
+    public function errors()
+    {
         return $this->errors;
     }
 

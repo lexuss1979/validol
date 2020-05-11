@@ -14,19 +14,20 @@ class DataProvider
         $this->data = $data;
     }
 
-    public function get($key){
-        if(preg_match("/^(\S*)\s*as\s*(\S*)$/",$key, $matches)){
+    public function get($key)
+    {
+        if (preg_match("/^(\S*)\s*as\s*(\S*)$/", $key, $matches)) {
             $name = $matches[1];
             $alias = $matches[2];
         } else {
             $name = $key;
             $alias = $key;
         }
-        if(!isset($this->data[$name])) return new NullValueObject($name, null);
+        if (!isset($this->data[$name])) return new NullValueObject($name, null);
 
         $value = new ValueObject($name, $this->data[$name]);
         $value->setAlias($alias);
-        return  $value;
+        return $value;
     }
 
 

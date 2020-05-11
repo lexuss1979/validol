@@ -5,7 +5,6 @@ namespace Lexuss1979\Validol\Validations;
 
 
 use Lexuss1979\Validol\Exceptions\InvalidValidationNameException;
-use PharIo\Manifest\Email;
 
 class ValidationFactory
 {
@@ -14,9 +13,15 @@ class ValidationFactory
     public function __construct()
     {
         $this->map = [
+            //REQUIREMENTS GROUP
             'required' => RequiredValidation::class,
+            'sometimes' => SometimesValidation::class,
+
+            //TYPE GROUP
             'int' => IntValidation::class,
             'bool' => BoolValidation::class,
+
+            //COMMON GROUP
             'max' => MaxValidation::class,
             'min' => MinValidation::class,
             'email' => EmailValidation::class,
@@ -27,11 +32,12 @@ class ValidationFactory
      * @param $validation
      * @return ValidationInterface
      */
-    public function get($validation){
+    public function get($validation)
+    {
         $options = explode(':', $validation);
         $validationName = array_shift($options);
-        if(!array_key_exists($validationName, $this->map)){
-            throw new InvalidValidationNameException('unknowk validation name '. $validationName);
+        if (!array_key_exists($validationName, $this->map)) {
+            throw new InvalidValidationNameException('unknown validation name ' . $validationName);
         }
         return new $this->map[$validationName]($options);
     }
