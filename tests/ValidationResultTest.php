@@ -20,6 +20,8 @@ class ValidationResultTest extends TestCase
         $this->assertSame(['name' => 'Alex'], $validation->data());
         $errors = $validation->errors();
         $this->assertArrayHasKey('email', $errors);
-        $this->assertCount(2, $errors['email']);
+        $this->assertCount(1, $errors['email']);
     }
+
+
 }

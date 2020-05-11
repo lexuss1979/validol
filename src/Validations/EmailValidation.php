@@ -11,7 +11,7 @@ class EmailValidation extends AbstractValidation implements ValidationInterface
     public function validate(ValueObject $data)
     {
 
-        if(! $this->isEmail($data->value())) {
+        if (!$this->isEmail($data->value())) {
             $this->error = "incorrect email address in {$data->name()}";
             return false;
         }
@@ -22,6 +22,6 @@ class EmailValidation extends AbstractValidation implements ValidationInterface
     {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
-    
+
 }
 
