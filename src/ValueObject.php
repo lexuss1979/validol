@@ -12,6 +12,7 @@ class ValueObject
     const INT = 'int';
     const FLOAT = 'float';
     const BOOL = 'bool';
+    const ARRAY = 'array';
 
     private $value;
     /**
@@ -26,13 +27,18 @@ class ValueObject
         $this->name = $name;
         $this->alias = $name;
         $this->value = $value;
+        $this->setType($type);
+    }
+
+    public function setType($type)
+    {
         if (!in_array($type, $this->types())) throw new ValueObjectInvalidTypeException('Wrong type: ' . $type);
         $this->type = $type;
     }
 
     protected function types()
     {
-        return [null, self::BOOL, self::FLOAT, self::INT, self::STRING];
+        return [null, self::BOOL, self::FLOAT, self::INT, self::STRING, self::ARRAY];
     }
 
     public static function get($value, $type = null)
@@ -88,6 +94,11 @@ class ValueObject
     public function isFloat()
     {
         return $this->type === self::FLOAT;
+    }
+
+    public function isArray()
+    {
+        return $this->type === self::ARRAY;
     }
 
     public function isUndefinedType()

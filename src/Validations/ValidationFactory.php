@@ -19,11 +19,16 @@ class ValidationFactory
 
             //TYPE GROUP
             'int' => IntValidation::class,
+            'float' => FloatValidation::class,
             'bool' => BoolValidation::class,
+            'array' => ArrayValidation::class,
+            'string' => StringValidation::class,
 
             //COMMON GROUP
             'max' => MaxValidation::class,
             'min' => MinValidation::class,
+            'max_len' => MaxLenValidation::class,
+            'min_len' => MinValidation::class,
             'email' => EmailValidation::class,
         ];
     }

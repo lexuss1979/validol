@@ -13,9 +13,11 @@ class BoolValidation extends AbstractValidation implements ValidationInterface
     public function validate(ValueObject $data)
     {
         if (!$this->isBool($data->value())) {
-            $this->error = "{$data->name()} must be bool";
+            $this->error = "{$data->name()} must be of bool type";
             return false;
         }
+
+        $data->setType(ValueObject::BOOL);
         return true;
     }
 

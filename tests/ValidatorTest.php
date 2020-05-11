@@ -70,29 +70,7 @@ class ValidatorTest extends TestCase
         ];
     }
 
-    /** @test
-     * @dataProvider boolProvider
-     */
-    public function it_validate_bool($val, $result)
-    {
-        $rules = ["access" => 'bool'];
-        $this->assertSame($result,
-            $this->validator->validate(['access' => $val], $rules)
-        );
-    }
 
-    public function boolProvider()
-    {
-        return [
-            ["string", false],
-            ["true", false],
-            ["1", false],
-            [true, true],
-            [false, true],
-            [1, true],
-            [0, true],
-        ];
-    }
 
     /** @test */
     public function it_can_process_several_validation_per_value()

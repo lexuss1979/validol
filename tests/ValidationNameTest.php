@@ -12,7 +12,6 @@ class ValidationNameTest extends TestCase
         $validation = Validator::process(
             ['first_name' => 'Alex'],
             ['first_name as name' => 'required']);
-        var_dump($validation->errors());
         $this->assertTrue($validation->success());
 
         $this->assertEquals(['name' => 'Alex'], $validation->data());

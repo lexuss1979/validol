@@ -16,6 +16,8 @@ class IntValidation extends AbstractValidation implements ValidationInterface
             $this->error = "{$data->name()} must be integer";
             return false;
         }
+
+        $data->setType(ValueObject::INT);
         return true;
     }
 
