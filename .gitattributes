@@ -1,2 +1,2 @@
-tests export-ignore
-.gitattributes exporzt-ignore
+/tests export-ignore
+/.gitattributes export-ignore
