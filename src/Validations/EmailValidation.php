@@ -8,20 +8,12 @@ use Lexuss1979\Validol\ValueObject;
 
 class EmailValidation extends AbstractValidation implements ValidationInterface
 {
-    public function validate(ValueObject $data)
+
+    protected $errorMessage = "incorrect email address in {name}";
+
+    public function isValid(ValueObject $data)
     {
-
-        if (!$this->isEmail($data->value())) {
-            $this->error = "incorrect email address in {$data->name()}";
-            return false;
-        }
-        return true;
+        return filter_var($data->value(), FILTER_VALIDATE_EMAIL);
     }
-
-    protected function isEmail($value)
-    {
-        return filter_var($value, FILTER_VALIDATE_EMAIL);
-    }
-
 }
 

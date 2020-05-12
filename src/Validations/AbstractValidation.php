@@ -12,12 +12,18 @@ abstract class AbstractValidation
     const TYPE_GROUP = 'type';
     const COMMON_GROUP = 'common';
     protected $error;
+    protected $data;
     protected $options;
     protected $group = self::COMMON_GROUP;
+    protected $errorMessage = '{name} is not valid';
 
     public function __construct($options = null)
     {
         $this->options = $options;
+    }
+
+    public function setErrorMessage($message){
+        $this->errorMessage = $message;
     }
 
     public function error()
@@ -25,7 +31,29 @@ abstract class AbstractValidation
         return $this->error;
     }
 
-    abstract public function validate(ValueObject $data);
+    public function validate(ValueObject $data){
+        $this->data = $data;
+        if (! $this->isValid($data) ) {
+            $this->error = $this->getErrorMessage();
+            $this->afterFailedValidation();
+            return false;
+        }
+        $this->afterSuccessValidation();
+        return true;
+    }
+    public function getErrorMessage(){
+        return str_replace("{name}", $this->data->name(), $this->errorMessage);
+    }
+
+    abstract public function isValid(ValueObject $data);
+
+    protected function afterSuccessValidation(){
+
+    }
+
+    protected function afterFailedValidation(){
+
+    }
 
     public function group()
     {

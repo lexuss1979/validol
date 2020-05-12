@@ -10,20 +10,18 @@ class IntValidation extends AbstractValidation implements ValidationInterface
 {
     protected $group = self::TYPE_GROUP;
 
-    public function validate(ValueObject $data)
-    {
-        if (!$this->isIntValue($data->value())) {
-            $this->error = "{$data->name()} must be integer";
-            return false;
-        }
+    protected $errorMessage = "{name} must be integer";
 
-        $data->setType(ValueObject::INT);
-        return true;
+    public function isValid(ValueObject $data)
+    {
+        if (is_bool($data->value())) return false;
+        return is_int($data->value()) || preg_match('/^\d+$/', $data->value());
     }
 
-    protected function isIntValue($value)
+    protected function afterSuccessValidation()
     {
-        if (is_bool($value)) return false;
-        return is_int($value) || preg_match('/^\d+$/', $value);
+        $this->data->setType(ValueObject::INT);
+        parent::afterSuccessValidation();
     }
+
 }

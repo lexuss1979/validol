@@ -11,14 +11,10 @@ class RequiredValidation extends AbstractValidation implements ValidationInterfa
 {
     protected $group = self::REQUIREMENTS_GROUP;
 
+    protected $errorMessage = "{name} must be specified";
 
-    public function validate(ValueObject $data)
+    public function isValid(ValueObject $data)
     {
-        if ($data instanceof NullValueObject) {
-            $this->error = "{$data->name()} must be specified";
-            return false;
-        }
-        return true;
+        return ! ($data instanceof NullValueObject);
     }
-
 }

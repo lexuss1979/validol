@@ -9,20 +9,16 @@ use Lexuss1979\Validol\ValueObject;
 class BoolValidation extends AbstractValidation implements ValidationInterface
 {
     protected $group = self::TYPE_GROUP;
+    protected $errorMessage = "{name} must be of bool type";
 
-    public function validate(ValueObject $data)
+    public function isValid(ValueObject $data)
     {
-        if (!$this->isBool($data->value())) {
-            $this->error = "{$data->name()} must be of bool type";
-            return false;
-        }
-
-        $data->setType(ValueObject::BOOL);
-        return true;
+        return is_bool($data->value()) || in_array($data->value(), [0, 1], true);
     }
 
-    protected function isBool($value)
+    protected function afterSuccessValidation()
     {
-        return is_bool($value) || in_array($value, [0, 1], true);
+        $this->data->setType(ValueObject::BOOL);
+        parent::afterSuccessValidation();
     }
 }

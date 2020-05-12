@@ -10,21 +10,19 @@ class FloatValidation extends AbstractValidation implements ValidationInterface
 {
     protected $group = self::TYPE_GROUP;
 
-    public function validate(ValueObject $data)
-    {
-        if (!$this->isFloatValue($data->value())) {
-            $this->error = "{$data->name()} must be float";
-            return false;
-        }
+    protected $errorMessage = "{name} must be float";
 
-        $data->setType(ValueObject::FLOAT);
-        return true;
+    public function isValid(ValueObject $data)
+    {
+        if ( is_bool($data->value()) ) return false;
+        return is_float($data->value()) || preg_match('/^[\d\.]+$/', $data->value());
     }
 
-    protected function isFloatValue($value)
+    protected function afterSuccessValidation()
     {
-        if (is_bool($value)) return false;
-        return is_float($value) || preg_match('/^[\d\.]+$/', $value);
+        $this->data->setType(ValueObject::FLOAT);
+        parent::afterSuccessValidation();
     }
+
 
 }

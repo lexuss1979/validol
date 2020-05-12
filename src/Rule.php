@@ -19,16 +19,50 @@ class Rule
 
     public function __construct($options, ValidationFactory $validationFactory)
     {
-        $this->options = $options;
-        $signatures = explode(" ", $options);
-        foreach ($signatures as $signature) {
-            $validation = $validationFactory->get($signature);
+        $signatures = $this->getSignatures($options);
+
+        foreach ($signatures as $key => $val) {
+            if(is_string($key)) {
+                /** @var AbstractValidation $validation */
+                $validation = $validationFactory->get($key);
+                $validation->setErrorMessage($val);
+            } else {
+                $validation = $validationFactory->get($val);
+            }
+
             $this->validations[$validation->group()][] = $validation;
         }
 
         $this->requirementsGuard();
         $this->typeGuard();
 
+    }
+
+    /**
+     * @param $options mixed|array|string
+     */
+    protected function getSignatures($options){
+        if(is_array($options)) {
+            $signatures = [];
+            foreach ($options as $key => $option){
+                $associativeArray = is_string($key);
+                if($associativeArray){
+                    $part = $this->getSignatures($key);
+                    $partValidation = [];
+                    foreach ($part as $item) {
+                        $partValidation[$item] = $option;
+                    }
+                    $signatures = array_merge($signatures, $partValidation);
+                } else {
+                    $part = $this->getSignatures($option);
+                    $signatures = array_merge($signatures, $part);
+                }
+
+            }
+            return $signatures;
+        }
+
+        return explode(" ", $options);
     }
 
     protected function requirementsGuard()
@@ -111,6 +145,6 @@ class Rule
 
     public function errors()
     {
-        return $this->errors;
+        return array_unique($this->errors);
     }
 }

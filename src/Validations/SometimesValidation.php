@@ -10,7 +10,7 @@ class SometimesValidation extends AbstractValidation implements ValidationInterf
 {
     protected $group = self::REQUIREMENTS_GROUP;
 
-    public function validate(ValueObject $data)
+    public function isValid(ValueObject $data)
     {
         return true;
     }

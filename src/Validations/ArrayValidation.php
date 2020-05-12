@@ -10,14 +10,16 @@ class ArrayValidation extends AbstractValidation implements ValidationInterface
 {
     protected $group = self::TYPE_GROUP;
 
-    public function validate(ValueObject $data)
-    {
-        if ( !is_array($data->value()) ) {
-            $this->error = "{$data->name()} must be an array";
-            return false;
-        }
+    protected $errorMessage = "{name} must be an array";
 
-        $data->setType(ValueObject::ARRAY);
-        return true;
+    public function isValid(ValueObject $data)
+    {
+        return is_array($data->value());
+    }
+
+    protected function afterSuccessValidation()
+    {
+        $this->data->setType(ValueObject::ARRAY);
+        parent::afterSuccessValidation();
     }
 }

@@ -8,16 +8,18 @@ use Lexuss1979\Validol\ValueObject;
 
 class StringValidation extends AbstractValidation implements ValidationInterface
 {
-
     protected $group = self::TYPE_GROUP;
 
-    public function validate(ValueObject $data)
+    protected $errorMessage = "{name} must be string";
+
+    public function isValid(ValueObject $data)
     {
-        if ( !is_string($data->value()) ) {
-            $this->error = "{$data->name()} must be a string";
-            return false;
-        }
-        $data->setType(ValueObject::STRING);
-        return true;
+        return is_string($data->value());
+    }
+
+    protected function afterSuccessValidation()
+    {
+        $this->data->setType(ValueObject::STRING);
+        parent::afterSuccessValidation();
     }
 }
