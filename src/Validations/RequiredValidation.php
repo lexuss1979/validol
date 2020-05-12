@@ -15,6 +15,6 @@ class RequiredValidation extends AbstractValidation implements ValidationInterfa
 
     public function isValid(ValueObject $data)
     {
-        return ! ($data instanceof NullValueObject);
+        return !($data instanceof NullValueObject);
     }
 }

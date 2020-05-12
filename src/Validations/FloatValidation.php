@@ -14,7 +14,7 @@ class FloatValidation extends AbstractValidation implements ValidationInterface
 
     public function isValid(ValueObject $data)
     {
-        if ( is_bool($data->value()) ) return false;
+        if (is_bool($data->value())) return false;
         return is_float($data->value()) || preg_match('/^[\d\.]+$/', $data->value());
     }
 

@@ -22,7 +22,7 @@ class Rule
         $signatures = $this->getSignatures($options);
 
         foreach ($signatures as $key => $val) {
-            if(is_string($key)) {
+            if (is_string($key)) {
                 /** @var AbstractValidation $validation */
                 $validation = $validationFactory->get($key);
                 $validation->setErrorMessage($val);
@@ -41,12 +41,13 @@ class Rule
     /**
      * @param $options mixed|array|string
      */
-    protected function getSignatures($options){
-        if(is_array($options)) {
+    protected function getSignatures($options)
+    {
+        if (is_array($options)) {
             $signatures = [];
-            foreach ($options as $key => $option){
+            foreach ($options as $key => $option) {
                 $associativeArray = is_string($key);
-                if($associativeArray){
+                if ($associativeArray) {
                     $part = $this->getSignatures($key);
                     $partValidation = [];
                     foreach ($part as $item) {
