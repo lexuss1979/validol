@@ -14,7 +14,7 @@ class StringValidationsTest extends TestCase
     /** @test */
     public function it_change_value_object_type_after_validation()
     {
-        $value = new ValueObject('name','Alex');
+        $value = new ValueObject('name', 'Alex');
         $validation = (new ValidationFactory())->get('string');
         $this->assertFalse($value->isString());
         $validation->validate($value);
@@ -29,7 +29,6 @@ class StringValidationsTest extends TestCase
         $validation = Validator::process(['test' => $val], ['test' => 'required string']);
         $this->assertSame($result, $validation->success());
     }
-
 
 
     public function stringProvider()
@@ -52,7 +51,7 @@ class StringValidationsTest extends TestCase
      */
     public function it_can_validate_max_string_len($val, $rule, $result)
     {
-        $this->assertEquals($result, (Validator::process(['name' => $val],['name' => $rule]))->success());
+        $this->assertEquals($result, (Validator::process(['name' => $val], ['name' => $rule]))->success());
     }
 
     public function maxStringLenProvider()
@@ -70,7 +69,7 @@ class StringValidationsTest extends TestCase
      */
     public function it_can_validate_min_string_len($val, $rule, $result)
     {
-        $this->assertEquals($result, (Validator::process(['name' => $val],['name' => $rule]))->success());
+        $this->assertEquals($result, (Validator::process(['name' => $val], ['name' => $rule]))->success());
     }
 
     public function minStringLenProvider()

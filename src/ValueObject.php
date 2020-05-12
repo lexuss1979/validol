@@ -13,6 +13,7 @@ class ValueObject
     const FLOAT = 'float';
     const BOOL = 'bool';
     const ARRAY = 'array';
+    const DATE = 'date';
 
     private $value;
     /**
@@ -38,7 +39,7 @@ class ValueObject
 
     protected function types()
     {
-        return [null, self::BOOL, self::FLOAT, self::INT, self::STRING, self::ARRAY];
+        return [null, self::BOOL, self::FLOAT, self::INT, self::STRING, self::ARRAY, self::DATE];
     }
 
     public static function get($value, $type = null)
@@ -99,6 +100,11 @@ class ValueObject
     public function isArray()
     {
         return $this->type === self::ARRAY;
+    }
+
+    public function isDate()
+    {
+        return $this->type === self::DATE;
     }
 
     public function isUndefinedType()

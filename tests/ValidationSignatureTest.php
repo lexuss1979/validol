@@ -2,8 +2,9 @@
 
 
 use Lexuss1979\Validol\Validator;
+use PHPUnit\Framework\TestCase;
 
-class ValidationSignatureTest extends \PHPUnit\Framework\TestCase
+class ValidationSignatureTest extends TestCase
 {
     /** @test */
     public function it_can_be_an_array()
@@ -15,10 +16,21 @@ class ValidationSignatureTest extends \PHPUnit\Framework\TestCase
         $validation_Array = Validator::process(
             $this->data(),
             [
-                'name' => ['required','string','min_len:2']
+                'name' => ['required', 'string', 'min_len:2']
             ]
         );
         $this->assertEquals($validation_Array, $validation_String);
+    }
+
+    protected function data()
+    {
+        return [
+            'name' => 'John',
+            'surname' => 'Doe',
+            'age' => 40,
+            'male' => true,
+            'dob' => '12.01.1980'
+        ];
     }
 
     /** @test */
@@ -31,24 +43,23 @@ class ValidationSignatureTest extends \PHPUnit\Framework\TestCase
         $validation_Array = Validator::process(
             $this->data(),
             [
-                'name' => ['required string','min_len:2']
+                'name' => ['required string', 'min_len:2']
             ]
         );
         $this->assertEquals($validation_Array, $validation_String);
     }
 
-
     /** @test */
     public function it_can_assign_alternative_error_message_for_group_validation()
     {
-          $validation = Validator::process(
+        $validation = Validator::process(
             $this->data(),
             [
                 'name' => ['required string min_len:220' => 'Name is incorrect']
             ]
         );
         $this->assertEquals([
-            'name'=> ['Name is incorrect']
+            'name' => ['Name is incorrect']
         ], $validation->errors());
     }
 
@@ -62,17 +73,7 @@ class ValidationSignatureTest extends \PHPUnit\Framework\TestCase
             ]
         );
         $this->assertEquals([
-            'name'=> ['Name is incorrect']
+            'name' => ['Name is incorrect']
         ], $validation->errors());
-    }
-
-    protected function data(){
-        return [
-            'name' => 'John',
-            'surname' => 'Doe',
-            'age' => 40,
-            'male' => true,
-            'dob' => '12.01.1980'
-        ];
     }
 }

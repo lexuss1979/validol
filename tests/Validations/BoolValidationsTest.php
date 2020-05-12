@@ -14,7 +14,7 @@ class BoolValidationsTest extends TestCase
     /** @test */
     public function it_change_value_object_type_after_validation()
     {
-        $value = new ValueObject('access',false);
+        $value = new ValueObject('access', false);
         $validation = (new ValidationFactory())->get('bool');
         $this->assertFalse($value->isBool());
         $validation->validate($value);
@@ -26,7 +26,7 @@ class BoolValidationsTest extends TestCase
      */
     public function it_validate_bool($val, $result)
     {
-        $this->assertEquals($result, (Validator::process(['access' => $val],['access' => 'bool']))->success());
+        $this->assertEquals($result, (Validator::process(['access' => $val], ['access' => 'bool']))->success());
     }
 
     public function boolProvider()

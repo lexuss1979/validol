@@ -71,7 +71,6 @@ class ValidatorTest extends TestCase
     }
 
 
-
     /** @test */
     public function it_can_process_several_validation_per_value()
     {

@@ -23,6 +23,7 @@ class ValidationFactory
             'bool' => BoolValidation::class,
             'array' => ArrayValidation::class,
             'string' => StringValidation::class,
+            'date' => DateValidation::class,
 
             //COMMON GROUP
             'max' => MaxValidation::class,
@@ -30,6 +31,9 @@ class ValidationFactory
             'max_len' => MaxLenValidation::class,
             'min_len' => MinValidation::class,
             'email' => EmailValidation::class,
+            'date_before' => DateBeforeValidation::class,
+            'date_after' => DateAfterValidation::class,
+            'date_between' => DateBetweenValidation::class,
         ];
     }
 

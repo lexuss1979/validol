@@ -15,7 +15,7 @@ class NumbersValidationsTest extends TestCase
     /** @test */
     public function it_change_value_object_type_to_int_after_validation()
     {
-        $value = new ValueObject('var',123);
+        $value = new ValueObject('var', 123);
         $validation = (new ValidationFactory())->get('int');
         $this->assertFalse($value->isInt());
         $validation->validate($value);
@@ -25,7 +25,7 @@ class NumbersValidationsTest extends TestCase
     /** @test */
     public function it_change_value_object_type_to_float_after_validation()
     {
-        $value = new ValueObject('var',12.3);
+        $value = new ValueObject('var', 12.3);
         $validation = (new ValidationFactory())->get('float');
         $this->assertFalse($value->isFloat());
         $validation->validate($value);
@@ -38,7 +38,7 @@ class NumbersValidationsTest extends TestCase
      */
     public function it_can_detect_int($val, $result)
     {
-        $this->assertEquals($result, (Validator::process(['int_val' => $val],['int_val' => 'required int']))->success());
+        $this->assertEquals($result, (Validator::process(['int_val' => $val], ['int_val' => 'required int']))->success());
     }
 
     public function intProvider()
@@ -60,7 +60,7 @@ class NumbersValidationsTest extends TestCase
      */
     public function it_can_detect_float($val, $result)
     {
-        $this->assertEquals($result, (Validator::process(['int_val' => $val],['int_val' => 'required float']))->success());
+        $this->assertEquals($result, (Validator::process(['int_val' => $val], ['int_val' => 'required float']))->success());
     }
 
     public function floatProvider()
