@@ -29,7 +29,7 @@ if ($validation->success()){
    var_dump($validation->errors());
 }
 ```
-##Required vs Sometimes
+## Required vs Sometimes
 ```php
 <?php
 
@@ -42,7 +42,7 @@ $validation = Validator::process([ 'age' => 'seventeen' ], ['age' => 'sometimes 
 // fails because age must be an integer value if presents
 ```
 
-##Validated data
+## Validated data
 You can get validated data with $validation->data(). It will contain only keys that was successfully validated.
  ```php
 <?php
@@ -55,7 +55,7 @@ $validation = Validator::process(['name' => 'Olga', 'age' => 18, 'email' => 'olg
 var_dump($validation->data());
 //  ['name' => 'Olga', 'age' => 18] 
  ```
-##Errors
+## Errors
 If validation fail you can access validation errors through $validation-errors(). It returns associative array like this.
  ```php
 <?php
@@ -70,7 +70,7 @@ var_dump($validation->errors());
 // ['address' => ['address must be specified'], 'age' => ['age must be an integer value']]
  ```
 
-##Keys alias
+## Keys alias
 Use 'as' keyword to change data keys signature after validation.
  ```php
 <?php
@@ -82,7 +82,7 @@ var_dump($validation->data());
 //  ['name' => 'Olga'] 
  ```
 
-##Error messages
+## Error messages
 You can specify your own error messages for validations set.
  ```php
 <?php
