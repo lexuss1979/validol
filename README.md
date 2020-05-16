@@ -76,8 +76,8 @@ Use 'as' keyword to change data keys signature after validation.
 <?php
 use Lexuss1979\Validol\Validator;
 
-$validation = Validator::process(['firstname as name' => 'Olga'], [
-    'firstname' => 'required']);
+$validation = Validator::process(['firstname' => 'Olga'], [
+    'firstname as name' => 'required']);
 var_dump($validation->data());
 //  ['name' => 'Olga'] 
  ```
