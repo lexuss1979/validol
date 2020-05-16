@@ -15,8 +15,7 @@ $ composer require lexuss1979/validol
 ## Basic Usage
 ```php
 <?php
-
-use Validol\Validator;
+use Lexuss1979\Validol\Validator;
 
 $validation = Validator::process(['name' => 'Olga', 'age' => 18], [
     'name' => 'required string min_len:2',
@@ -30,3 +29,53 @@ if ($validation->success()){
    var_dump($validation->errors());
 }
 ```
+##Required vs Sometimes
+```php
+$validation = Validator::process([], ['age' => 'required']);
+//fails 
+$validation = Validator::process([], ['age' => 'sometimes integer']);
+//success 
+$validation = Validator::process([ 'age' => 'seventeen' ], ['age' => 'sometimes integer']);
+// fails because age must be an integer value if presents
+```
+
+##Validated data
+You can get validated data with $validation->data(). It will contain only keys that was successfully validated.
+ ```php
+$validation = Validator::process(['name' => 'Olga', 'age' => 18, 'email' => 'olga@gmail.test'], [
+    'name' => 'required string min_len:2',
+    'age' => 'required integer min:16'
+]);
+var_dump($validation->data());
+//  ['name' => 'Olga', 'age' => 18] 
+ ```
+##Errors
+If validation fail you can access validation errors through $validation-errors(). It returns associative array like this.
+ ```php
+$validation = Validator::process(['name' => 'Olga', 'age' => ''], [
+    'address' => 'required string',
+    'age' => 'required integer min:16'
+]);
+
+var_dump($validation->errors());
+// ['address' => ['address must be specified'], 'age' => ['age must be an integer value']]
+ ```
+
+##Keys alias
+Use 'as' keyword to change data keys signature after validation.
+ ```php
+$validation = Validator::process(['firstname as name' => 'Olga'], [
+    'firstname' => 'required']);
+var_dump($validation->data());
+//  ['name' => 'Olga'] 
+ ```
+
+##Error messages
+You can specify your own error messages for validations set.
+ ```php
+$validation = Validator::process(['weight' => 'heavy'], [
+    'weight' => ['required integer min:10' => 'Something is wrong']
+]);
+var_dump($validation->errors());
+//  ['weight' => ['Something is wrong']] 
+ ```
