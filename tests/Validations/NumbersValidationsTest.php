@@ -4,6 +4,7 @@
 namespace Validations;
 
 
+use Lexuss1979\Validol\Validations\In;
 use Lexuss1979\Validol\Validations\ValidationFactory;
 use Lexuss1979\Validol\Validator;
 use Lexuss1979\Validol\ValueObject;
@@ -74,6 +75,31 @@ class NumbersValidationsTest extends TestCase
             ['3str', false],
             [true, false],
             [false, false],
+        ];
+    }
+
+    /** @test
+     * @dataProvider inValidationProvider
+     */
+    public function it_can_perform_in_for_numbers($value, $result)
+    {
+        $data  = ['length'=> $value];
+        $rules= [
+            'length' => ['required', In::array([10,100,100.45, 24.2345])]
+        ];
+        $this->assertEquals($result, Validator::process($data, $rules)->success());
+    }
+
+    public function inValidationProvider()
+    {
+        return [
+            [10, true],
+            [20, false],
+            [24.2345, true],
+            [30, false],
+            [46, false],
+            [100, true],
+            [100.45, true],
         ];
     }
 
