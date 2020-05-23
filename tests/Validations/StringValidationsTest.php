@@ -4,6 +4,7 @@
 namespace Validations;
 
 
+use Lexuss1979\Validol\Validations\In;
 use Lexuss1979\Validol\Validations\ValidationFactory;
 use Lexuss1979\Validol\Validator;
 use Lexuss1979\Validol\ValueObject;
@@ -82,5 +83,31 @@ class StringValidationsTest extends TestCase
         ];
     }
 
+    /** @test
+     * @dataProvider inValidationProvider
+     * @param $value
+     * @param $result
+     */
+    public function it_can_perform_in_validation($value, $result)
+    {
+        $data  = ['day'=> $value];
+        $rules= [
+            'day' => ['required', In::array(['sunday','monday'])]
+        ];
+        $this->assertEquals($result, Validator::process($data, $rules)->success());
+    }
+
+    public function inValidationProvider()
+    {
+        return [
+            ['monday', true],
+            ['tuesday', false],
+            ['wednesday', false],
+            ['thursday', false],
+            ['friday', false],
+            ['saturday', false],
+            ['sunday', true],
+        ];
+    }
 
 }
