@@ -31,4 +31,6 @@ class ArrayValidationsTest extends TestCase
         $result = Validator::process(['test' => '1,2,3'], $rules);
         $this->assertFalse($result->success());
     }
+
+
 }

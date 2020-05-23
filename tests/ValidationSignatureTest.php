@@ -1,6 +1,8 @@
 <?php
 
 
+use Lexuss1979\Validol\Validations\MinLenValidation;
+use Lexuss1979\Validol\Validations\RequiredValidation;
 use Lexuss1979\Validol\Validator;
 use PHPUnit\Framework\TestCase;
 
@@ -75,5 +77,20 @@ class ValidationSignatureTest extends TestCase
         $this->assertEquals([
             'name' => ['Name is incorrect']
         ], $validation->errors());
+    }
+
+    /** @test */
+    public function it_can_use_validation_objects()
+    {
+        $validation = Validator::process(
+            $this->data(),
+            [
+               'name' => [
+                   new RequiredValidation(),
+                   new MinLenValidation(4)
+               ]
+            ]
+        );
+        $this->assertTrue($validation->success());
     }
 }

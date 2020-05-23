@@ -19,6 +19,7 @@ abstract class AbstractValidation
 
     public function __construct($options = null)
     {
+        if(!is_null($options) && !is_array($options) ) $options = [$options];
         $this->options = $options;
     }
 

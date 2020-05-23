@@ -17,6 +17,8 @@ class Rule
     protected $value;
     protected $status;
 
+    protected $validationCache = [];
+
     public function __construct($options, ValidationFactory $validationFactory)
     {
         $signatures = $this->getSignatures($options);
@@ -27,7 +29,12 @@ class Rule
                 $validation = $validationFactory->get($key);
                 $validation->setErrorMessage($val);
             } else {
-                $validation = $validationFactory->get($val);
+                if($this->isCachedValidation($val)){
+                    $validation = $this->validationCache[$val];
+                } else {
+                    $validation = $validationFactory->get($val);
+                }
+
             }
 
             $this->validations[$validation->group()][] = $validation;
@@ -61,6 +68,8 @@ class Rule
 
             }
             return $signatures;
+        } elseif ($options instanceof AbstractValidation){
+            return [$this->addToCache($options)];
         }
 
         return explode(" ", $options);
@@ -148,4 +157,15 @@ class Rule
     {
         return array_unique($this->errors);
     }
+
+    protected function addToCache(AbstractValidation $validation){
+        $key = '__cache__' . sizeof($this->validationCache);
+        $this->validationCache[$key] = $validation;
+        return $key;
+    }
+
+    protected function isCachedValidation($name){
+        return array_key_exists($name, $this->validationCache);
+    }
+
 }
